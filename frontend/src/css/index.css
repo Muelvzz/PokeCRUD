@@ -1,0 +1,22 @@
+html, * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, rgb(254, 21, 21), rgb(244, 52, 52));
+  font-family: Helvetica, sans-serif;
+  background-repeat: no-repeat;
+}
+
+main {
+  padding: 1.5rem;
+}
+
+button {
+  border-style: none;
+  cursor: pointer;
+}

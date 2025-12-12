@@ -1,0 +1,42 @@
+nav, main {
+    padding: 1rem 1.5rem;
+}
+
+nav {
+    border-bottom: 3px solid black;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#left-nav, #right-nav {
+    width: 100%;
+    height: 100%;
+}
+
+#left-nav {
+    font-size: 1.5em;
+}
+
+#right-nav {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.nav-btn {
+    padding: 0.5rem;
+    font-size: medium;
+    font-weight: bold;
+    height: 100%;
+    background-color:  rgb(256, 23, 23);
+    border-radius: 5px;
+
+}
+
+.nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.498);
+    color: white;
+    transition: 0.3s;
+}
