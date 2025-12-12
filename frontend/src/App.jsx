@@ -1,14 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './css/App.css'
+import api from './api'
 
 function App() {
 
+  const [refresh, setRefresh] = useState(false)
   const [region, setRegion] = useState("")
-  const [selectPokemon, setSelectPokemon] = useState({})
+  const [selectPokemon, setSelectPokemon] = useState({ results: [] })
 
   const regions = ["Kanto", "Johto", "Hoenn", "Sinnoh", "Unova", "Kalos", "Alola", "Galar", "Paldea"]
 
-  console.log(region)
+  async function loadPokemon() {
+    try {
+      const res = await api.get("/pokemon")
+      setSelectPokemon(res.data)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  useEffect(() => {
+    loadPokemon()
+  }, [refresh])
 
   return (
     <>
@@ -34,6 +47,10 @@ function App() {
             <div id="left-main"></div>
             <div id="right-main"></div>
       </main>
+
+      {selectPokemon.results.map((pokemon, i) => (
+        <p key={i}>{ pokemon.name }</p>
+      ))}
 
     </>
   )
