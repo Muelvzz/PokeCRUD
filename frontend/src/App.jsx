@@ -1,19 +1,22 @@
 import { useState, useEffect } from 'react'
 import './css/App.css'
+
 import api from './api'
+import LeftTab from './components/LeftTab'
+import RightTab from './components/RightTab'
 
 function App() {
 
   const [refresh, setRefresh] = useState(false)
   const [region, setRegion] = useState("")
-  const [selectPokemon, setSelectPokemon] = useState({ results: [] })
+  const [allPokemon, setAllPokemon] = useState({ results: [] })
 
   const regions = ["Kanto", "Johto", "Hoenn", "Sinnoh", "Unova", "Kalos", "Alola", "Galar", "Paldea"]
 
   async function loadPokemon() {
     try {
       const res = await api.get("/pokemon")
-      setSelectPokemon(res.data)
+      setAllPokemon(res.data)
     } catch (err) {
       console.error(err)
     }
@@ -44,13 +47,15 @@ function App() {
       </nav>
 
       <main>
-            <div id="left-main"></div>
-            <div id="right-main"></div>
+            <div id="left-main">
+              <LeftTab />
+            </div>
+            <div id="right-main">
+              <RightTab 
+                allPokemons={allPokemon}
+              />
+            </div>
       </main>
-
-      {selectPokemon.results.map((pokemon, i) => (
-        <p key={i}>{ pokemon.name }</p>
-      ))}
 
     </>
   )

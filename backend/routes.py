@@ -9,9 +9,9 @@ router = APIRouter(
 )
 
 @router.get("/")
-async def get_pokemon():
+async def get_pokemon(limit: int = 7):
     async with httpx.AsyncClient() as client:
-        response = await client.get(URL)
+        response = await client.get(f"{URL}/?limit={limit}")
 
     if response.status_code != 200:
         raise HTTPException(status_code=response.status_code, detail="Failed to load Pokemons")
