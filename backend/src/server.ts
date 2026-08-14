@@ -31,3 +31,5 @@ process.on("SIGINT", async () => {
   await client?.close()
   process.exit(0)
 })
+
+export default app
