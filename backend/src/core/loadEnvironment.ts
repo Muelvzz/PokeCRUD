@@ -10,3 +10,4 @@ dotenv.config({ path: envPath })
 
 export const ATLAS_URI = process.env.ATLAS_URI
 export const PORT = process.env.PORT
+export const VERCEL_FRONTEND_URL = process.env.VERCEL_FRONTEND_URL

@@ -1,5 +1,7 @@
 import axios from "axios"
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || import.meta.env.LOCALHOST_URL;
+
 export const api = axios.create({
-  baseURL: "http://localhost:3000/api/pokemon"
+  baseURL: `${BACKEND_URL}/api/pokemon`
 })

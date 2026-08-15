@@ -6,7 +6,7 @@ import { handleSuccess } from "../utils/handleSuccess.ts"
 
 export const patchSavedPokemon = async (req: Request, res: Response, next: NextFunction) => {
   const { _id, name, isFavorite } = req.body
-  const pokemonToUpdate = queryComp(_id)
+  const pokemonToUpdate = queryComp({ _id })
   const valueToUpdate = queryComp({ name, isFavorite })
 
   try {

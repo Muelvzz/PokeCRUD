@@ -1,36 +1,36 @@
-import type { PokemonData } from "../types/pokemon.ts";
-import type { WithId, Document } from "mongodb";
+import type { PokemonData } from "../../../shared/types/pokemon.ts"
+import type { WithId, Document } from "mongodb"
+
+function normalizeBaseStats(data: Record<string, unknown> | undefined) {
+  return {
+    hp: Number(data?.hp ?? 0),
+    attack: Number(data?.attack ?? 0),
+    defense: Number(data?.defense ?? 0),
+    specialAttack: Number(data?.specialAttack ?? 0),
+    specialDefense: Number(data?.specialDefense ?? 0),
+    speed: Number(data?.speed ?? 0),
+  }
+}
 
 export function parseAllResults(results: WithId<Document>[]): PokemonData[] {
-  const parse = results.map((data) => ({
-    _id: data._id.toString(),
-    id: data.id,
-    dex_entry: data.dex_entry,
-    name: data.name,
-    type: data.type,
-    image: data.image,
-    desc: data.desc,
-    gen: data.gen,
-    height: data.height,
-    weight: data.weight,
-    category: data.category,
-  }))
-
-  return parse
+  return results.map((result) => parseResult(result))
 }
 
 export function parseResult(result: WithId<Document>): PokemonData {
   return {
-    _id: result._id.toString(),
-    id: result.id,
-    dex_entry: result.dex_entry,
-    name: result.name,
-    type: result.type,
-    image: result.image,
-    desc: result.desc,
-    gen: result.gen,
-    height: result.height,
-    weight: result.weight,
-    category: result.category,
+    _id: String(result._id ?? ""),
+    id: Number(result.id ?? 0),
+    dex_entry: Number(result.dex_entry ?? 0),
+    name: String(result.name ?? ""),
+    image: String(result.image ?? ""),
+    type: Array.isArray(result.type) ? result.type.map(String) : [],
+    height: Number(result.height ?? 0),
+    weight: Number(result.weight ?? 0),
+    baseExp: Number(result.baseExp ?? 0),
+    desc: String(result.desc ?? ""),
+    gen: Number(result.gen ?? 0),
+    category: String(result.category ?? ""),
+    baseStats: normalizeBaseStats(result.baseStats as Record<string, unknown> | undefined),
+    abilities: Array.isArray(result.abilities) ? result.abilities.map(String) : [],
   }
 }

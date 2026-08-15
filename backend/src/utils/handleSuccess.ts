@@ -1,4 +1,4 @@
-import type { SuccessResponse } from "../types/pokemon"
+import type { SuccessResponse } from "../types/pokemon.ts"
 import type { NextFunction, Response } from "express"
 
 export function handleSuccess(next: NextFunction, resultObject: SuccessResponse, res: Response) {

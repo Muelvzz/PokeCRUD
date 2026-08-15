@@ -1,15 +1,18 @@
-import { ObjectId } from "mongodb"
-import { ShowPokemonData } from "../../../shared/types/pokemon"
+import type { ObjectId } from "mongodb"
+
+import type { PokemonData, ShowPokemonData } from "../../../shared/types/pokemon.ts"
 
 export interface PokemonFavoriteUpdate {
-  isFavorite: boolean
+  isFavorite?: boolean
 }
 
 export interface SuccessResponse extends ApiError {
-  data: ShowPokemonData[] | ShowPokemonData
+  data: unknown
 }
 
-export interface PokemonPayload extends ShowPokemonData, PokemonFavoriteUpdate { }
+export interface PokemonPayload extends Omit<PokemonData, "_id" | "baseExp" | "baseStats" | "abilities"> {
+  isFavorite?: boolean
+}
 
 export interface PokemonPathParams {
   _id: ObjectId

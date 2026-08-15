@@ -7,7 +7,7 @@ import { handleSuccess } from "../utils/handleSuccess.ts"
 
 export const delSavedPokemon = async (req: Request, res: Response, next: NextFunction) => {
   const { _id } = parsePathParams(req)
-  const pokemonToDelete = queryComp(_id)
+  const pokemonToDelete = queryComp({ _id })
 
   try {
 

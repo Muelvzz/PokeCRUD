@@ -1,5 +1,5 @@
 import express from "express"
-import { PORT } from "./core/loadEnvironment.ts"
+import { PORT, VERCEL_FRONTEND_URL } from "./core/loadEnvironment.ts"
 import { pokemonRouter } from "./routers/pokemon.ts"
 import { errorHandler } from "./middleware/errorHandler.ts"
 import { client } from "./database/conn.ts"
@@ -7,14 +7,18 @@ import cors from "cors"
 
 const app = express()
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://172.26.176.1:5173",
+  "http://192.168.100.29:5173",
+]
+
+if (VERCEL_FRONTEND_URL) allowedOrigins.push(VERCEL_FRONTEND_URL)
+
 app.use(express.json()) // Parse JSON payloads
 app.use(express.urlencoded({  extended: true })) // Parse URL-encoded HTML forms
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "http://172.26.176.1:5173",
-    "http://192.168.100.29:5173",
-  ],
+  origin: allowedOrigins,
   credentials: true,
 }))
 

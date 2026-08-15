@@ -1,18 +1,16 @@
 import type { PokemonPayload } from "../types/pokemon.ts"
 
 export function parsePayload(payload: PokemonPayload) {
-  const newPokemon = {
-    dex_entry: payload.dex_entry,
+  return {
+    dex_entry: Number(payload.dex_entry ?? 0),
     name: payload.name,
-    type: payload.type,
+    type: Array.isArray(payload.type) ? payload.type : [],
     image: payload.image,
-    desc: payload.desc,
-    gen: payload.gen,
-    height: payload.height,
-    weight: payload.weight,
-    category: payload.category,
+    desc: String(payload.desc ?? ""),
+    gen: Number(payload.gen ?? 0),
+    height: Number(payload.height ?? 0),
+    weight: Number(payload.weight ?? 0),
+    category: String(payload.category ?? ""),
     isFavorite: payload.isFavorite ?? false,
   }
-
-  return newPokemon
 }
