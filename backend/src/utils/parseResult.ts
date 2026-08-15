@@ -1,4 +1,4 @@
-import type { PokemonData } from "../../../shared/types/pokemon.ts"
+import type { PokemonData } from "../types/pokemon.ts"
 import type { WithId, Document } from "mongodb"
 
 function normalizeBaseStats(data: Record<string, unknown> | undefined) {
