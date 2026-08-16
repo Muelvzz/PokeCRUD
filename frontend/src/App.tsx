@@ -3,9 +3,11 @@ import { api } from "./service/api.ts";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { PokemonContext } from "./context/apiContext.tsx";
+import type { PokemonData } from "./types/pokemonType.ts";
+import Footer from "./components/Footer.tsx";
 
 export default function App() {
-  const [pokemons, setPokemons] = useState([])
+  const [pokemons, setPokemons] = useState<PokemonData[]>([])
   const [pokemonType, setPokemonType] = useState("all")
   const [pokemonSearch, setPokemonSearch] = useState("")
   const [refresh, setRefresh] = useState(false)
@@ -24,7 +26,9 @@ export default function App() {
         const res = await api.get(apiQuery)
         setPokemons(res.data.data)
 
-        console.log(`[Client] Query: ${apiQuery}`)
+        // console.log(`[Client]: ${apiQuery}`)
+        // console.log(`[Client]: ${pokemons}`)
+
       } catch (err) {
         console.error(err)
       }
@@ -46,6 +50,7 @@ export default function App() {
               setRefresh,
             }}/>
           </main>
+        <Footer />
       </PokemonContext.Provider>
     </>
   )
