@@ -15,7 +15,7 @@ function Pokedex() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const filterRef = useRef<HTMLDivElement>(null);
 
-    const pokemons = usePokemons()
+    const pokemons = usePokemons() || []
     const { pokemonType, setPokemonType } = useOutletContext<PokemonContextType>()
     const { pokemonSearch, setPokemonSearch } = useOutletContext<PokemonContextSearch>()
     const { setRefresh } = useOutletContext<ContextRefresh>()
