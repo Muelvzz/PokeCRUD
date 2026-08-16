@@ -8,12 +8,5 @@
       "source": "/src/(.*)", 
       "destination": "/src/server.ts" 
     }
-  ],
-  "routes": [
-    {
-      "src": "/src/(.*)",
-      "dest": "/src/routers/pokemon.ts",
-      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-    }
   ]
 }
