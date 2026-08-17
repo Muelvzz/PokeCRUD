@@ -10,15 +10,34 @@ import { usePokemons } from '../../context/apiContext';
 import { useOutletContext } from 'react-router-dom';
 
 import { type PokemonContextType, type PokemonContextSearch, type ContextRefresh, pokemonTypes } from '../../types/pokemonType';
+import type { PagesProps } from '../../types/paginationType';
+
+import PaginationButtons from '../../components/PaginationButtons';
 
 function Pokedex() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const filterRef = useRef<HTMLDivElement>(null);
 
     const pokemons = usePokemons() || []
-    const { pokemonType, setPokemonType } = useOutletContext<PokemonContextType>()
-    const { pokemonSearch, setPokemonSearch } = useOutletContext<PokemonContextSearch>()
-    const { setRefresh } = useOutletContext<ContextRefresh>()
+    const {
+    pokemonType,
+    setPokemonType,
+    pokemonSearch,
+    setPokemonSearch,
+    setRefresh,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    } = useOutletContext<
+    PokemonContextType &
+        PokemonContextSearch &
+        ContextRefresh &
+        PagesProps
+    >()
+
+    let pages = []
+
+    for (let i = 1; i < totalPages; i++) pages.push(i)
 
     useEffect(() => {
         function handleClickOutside(event: PointerEvent) {
@@ -66,6 +85,7 @@ function Pokedex() {
                                 setPokemonType(e.target.value);
                                 setIsFilterOpen(false);
                                 setRefresh(prev => !prev)
+                                setCurrentPage(0)
                             }}
                             className="border rounded-lg px-3 py-2 absolute right-0 top-12"
                         >
@@ -99,6 +119,12 @@ function Pokedex() {
                     </div>
                 )}
             </section>
+
+            <PaginationButtons
+                totalPages={totalPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+            />
         </>
     )
 }

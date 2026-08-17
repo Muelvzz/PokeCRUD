@@ -14,13 +14,40 @@ export const getAllPokemon = async (req: Request, res: Response, next: NextFunct
 
     const db = getDb()
     let collection = (await db).collection("pokemon")
-    let results = await collection.find(query).collation({ locale: "en", strength: 2 }).sort({ dex_entry: 1 }).skip(offset).limit(12).toArray()
+    let results = await collection
+      .find(query, {
+        projection: {
+          id: 1,
+          dex_entry: 1,
+          name: 1,
+          image: 1,
+          type: 1,
+          gen: 1,
+        }
+      })
+      .collation({ 
+        locale: "en", 
+        strength: 2 
+      })
+      .sort({ 
+        dex_entry: 1 
+      })
+      .skip(offset)
+      .limit(12)
+      .toArray()
+
+    let totalItems = await collection.countDocuments(query, {
+      collation: { 
+        locale: "en", 
+        strength: 2 
+      }
+    })
 
     if (results.length === 0) { return handleError(next, { status: 404, message: "Pokemon Not Found." }) }
 
     const parseResult = parseAllResults(results)
     
-    return handleSuccess(next, { status: 200, message: "Query Success", data: parseResult }, res)
+    return handleSuccess(next, { status: 200, message: "Query Success", data: parseResult, totalItems: totalItems }, res)
 
   } catch (err) {
 

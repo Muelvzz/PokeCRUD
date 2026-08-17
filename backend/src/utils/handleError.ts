@@ -1,4 +1,4 @@
-import type { ApiError } from "../types/pokemon.ts"
+import type { ApiError } from "../types/response.ts"
 import type { NextFunction } from "express"
 
 export function handleError(next: NextFunction, errorObject: ApiError) {
