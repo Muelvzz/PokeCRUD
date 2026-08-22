@@ -8,7 +8,7 @@ interface PokemonModalProps {
   onClose: () => void;
 }
 
-function CardModal({ pokemon, onClose }: PokemonModalProps) {
+function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
   const typeInfo = typeData.find(
     (item) => item.type.toLowerCase() === pokemon.type[0]?.toLowerCase()
   );
@@ -17,18 +17,15 @@ function CardModal({ pokemon, onClose }: PokemonModalProps) {
 
   // Calculate total stats
   const totalStats =
-    (pokemon.baseStats.hp || 0) +
-    (pokemon.baseStats.attack || 0) +
-    (pokemon.baseStats.defense || 0) +
-    (pokemon.baseStats.specialAttack || 0) +
-    (pokemon.baseStats.specialDefense || 0) +
-    (pokemon.baseStats.speed || 0);
+    (pokemon.baseStats.hp) +
+    (pokemon.baseStats.attack) +
+    (pokemon.baseStats.defense) +
+    (pokemon.baseStats.specialAttack) +
+    (pokemon.baseStats.specialDefense) +
+    (pokemon.baseStats.speed);
 
-  // Helper function to render base stat bars
   const renderStatRow = (label: string, value: number) => {
-    // Max base stat value typically caps around 255 for scaling
     const percentage = Math.min(100, Math.max(0, (value / 255) * 100));
-
     return (
       <div className="flex items-center gap-2 text-sm text-gray-700">
         <span className="w-20 text-left font-medium">{label}</span>
@@ -187,4 +184,4 @@ function CardModal({ pokemon, onClose }: PokemonModalProps) {
   );
 }
 
-export default CardModal;
+export default PokemonModal;

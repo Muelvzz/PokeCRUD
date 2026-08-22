@@ -12,7 +12,7 @@ export const patchSavedPokemon = async (req: Request, res: Response, next: NextF
   try {
 
     const db = getDb()
-    const collection = (await db).collection("saved_pokemon")
+    const collection = (await db).collection("pokemon")
     let result = await collection.updateOne(pokemonToUpdate, valueToUpdate)
 
     if (!result) { return handleError(next, { status: 400, message: "An error updating the Pokemon" }) }
