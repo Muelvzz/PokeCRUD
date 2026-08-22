@@ -13,6 +13,7 @@ export default function App() {
   const [refresh, setRefresh] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [_idOfPokemon, set_idOfPokemon] = useState("")
 
   useEffect(() => {
     const fetchPayload = async () => {
@@ -40,8 +41,8 @@ export default function App() {
       }
     }
 
-  fetchPayload()
-}, [pokemonType, pokemonSearch, currentPage, refresh])
+    fetchPayload()
+  }, [pokemonType, pokemonSearch, currentPage, refresh])
 
   // console.log(`[Client]: ${apiQuery}`)
   // console.log(`[Client] Pokemon Size: ${pokemons.length}`)
@@ -61,6 +62,7 @@ export default function App() {
                 totalPages,
                 currentPage,
                 setCurrentPage,
+                set_idOfPokemon,
               }}
             />
           </main>

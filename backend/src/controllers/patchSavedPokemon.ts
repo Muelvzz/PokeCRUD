@@ -3,21 +3,26 @@ import { getDb } from "../database/conn.ts"
 import { queryComp } from "../utils/queryComp.ts"
 import { handleError } from "../utils/handleError.ts"
 import { handleSuccess } from "../utils/handleSuccess.ts"
+import { parseQueryParams } from "../utils/parseQueryParams.ts"
 
 export const patchSavedPokemon = async (req: Request, res: Response, next: NextFunction) => {
-  const { _id, name, isFavorite } = req.body
+  const { _id } = parseQueryParams(req)
   const pokemonToUpdate = queryComp({ _id })
-  const valueToUpdate = queryComp({ name, isFavorite })
 
   try {
 
     const db = getDb()
-    const collection = (await db).collection("saved_pokemon")
+    const collection = (await db).collection("pokemon")
+
+    let pokemonData = await collection.findOne(pokemonToUpdate)
+    if (!pokemonData) { return handleError(next, { status: 404, message: "Pokemon Not Found" }) }
+
+    const valueToUpdate = { $set: { isFavorite: !pokemonData.isFavorite } }
     let result = await collection.updateOne(pokemonToUpdate, valueToUpdate)
 
     if (!result) { return handleError(next, { status: 400, message: "An error updating the Pokemon" }) }
 
-    return handleSuccess(next, { status: 202, message: "Successfully Updated.", data: result }, res)
+    return handleSuccess(next, { status: 202, message: `[Server] Request Success`, data: result }, res)
 
   } catch (err) {
 

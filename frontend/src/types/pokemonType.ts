@@ -44,11 +44,13 @@ export const typeData: PokemonTypeData[] = [
     { type: "Water", color: "#4DA6ED", icon: water },
 ];
 
-export interface PokemonCardProps {
+export interface PokemonCardProps extends ContextRefresh{
   number: number;
   name: string;
   image: string;
   type: string[];
+  uniqueId: string
+  isFavorite: boolean
 }
 
 export interface TypeTagProps {
@@ -106,6 +108,7 @@ export interface ShowPokemonData {
   name: string
   image: string
   type: string[]
+  isFavorite: boolean
 }
 
 export interface PokemonData extends ShowPokemonData {

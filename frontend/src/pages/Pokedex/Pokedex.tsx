@@ -5,14 +5,16 @@ import pokeballMissing from '../../assets/icons/Pokeball-missing.png'
 import SearchBar from '../../components/SearchBar';
 import filterIcon from '../../assets/icons/filter-icon.svg';
 import PokemonCard from '../../components/PokemonCard';
+import PokemonModal from '../../components/CardModal';
 
 import { usePokemons } from '../../context/apiContext';
 import { useOutletContext } from 'react-router-dom';
 
-import { type PokemonContextType, type PokemonContextSearch, type ContextRefresh, pokemonTypes } from '../../types/pokemonType';
+import PaginationButtons from '../../components/PaginationButtons';
+import { type PokemonContextType, type PokemonContextSearch, type ContextRefresh, pokemonTypes, type PokemonData } from '../../types/pokemonType';
 import type { PagesProps } from '../../types/paginationType';
 
-import PaginationButtons from '../../components/PaginationButtons';
+import { api } from '../../service/api';
 
 function Pokedex() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -50,6 +52,24 @@ function Pokedex() {
         return () => document.removeEventListener('pointerdown', handleClickOutside);
     }, []);
     
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [modalData, setModalData] = useState<PokemonData | null>(null);
+
+    const handleClick = async (pokemon: PokemonData) => {
+        try {
+            let apiQuery = `/${pokemon._id}`
+            const result = await api.get(apiQuery)
+            console.log(result.data.data)
+            setModalData(result.data.data)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setRefresh(prev => !prev)
+        }
+        console.log(pokemon)
+        setModalOpen(true);
+    };
+
     return(
         <>
             <header className="mt-28 w-fit m-auto text-center">
@@ -103,11 +123,9 @@ function Pokedex() {
                 {pokemons.length > 0 ? (
                     pokemons.map((pokemon) => (
                         <PokemonCard
-                            key={pokemon.id}
-                            number={pokemon.dex_entry}
-                            name={pokemon.name}
-                            image={pokemon.image}
-                            type={pokemon.type}
+                            pokemon={pokemon}
+                            onClick={() => handleClick(pokemon)}
+                            setRefresh={setRefresh}
                         />
                     ))
                 ) : (
@@ -119,6 +137,12 @@ function Pokedex() {
                     </div>
                 )}
             </section>
+            {isModalOpen && modalData && (
+                <PokemonModal
+                    pokemon={modalData}
+                    onClose={() => setModalOpen(false)}
+                />
+            )}
 
             <PaginationButtons
                 totalPages={totalPages}

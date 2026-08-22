@@ -13,7 +13,7 @@ export const getSavedPokemon = async (req: Request, res: Response, next: NextFun
   try {
 
     const db = getDb()
-    const collection = (await db).collection("saved_pokemon")
+    const collection = (await db).collection("pokemon")
     let result = await collection.findOne(query)
 
     if (!result) { return handleError(next, { status: 404, message: "Pokemon Not Found." }) }
