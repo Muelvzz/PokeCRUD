@@ -24,6 +24,7 @@ export interface PokemonPayload {
   image: string
   type: string[]
   gen: number
+  isFavorite: boolean
 }
 
 export interface SelectedPokemon extends PokemonPayload {

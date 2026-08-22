@@ -17,8 +17,6 @@ export function queryComp(query: PokemonQueryComposition) {
     baseQuery = { _id: new ObjectId(_id.toString()) }
   } else if (name !== undefined) {
     baseQuery = { $set: { name: name.trim() } }
-  } else if (isFavorite !== undefined) {
-    baseQuery = { $set: { isFavorite } }
   }
 
   return baseQuery

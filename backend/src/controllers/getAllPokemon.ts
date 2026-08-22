@@ -23,6 +23,7 @@ export const getAllPokemon = async (req: Request, res: Response, next: NextFunct
           image: 1,
           type: 1,
           gen: 1,
+          isFavorite: 1,
         }
       })
       .collation({ 
@@ -32,7 +33,7 @@ export const getAllPokemon = async (req: Request, res: Response, next: NextFunct
       .sort({ 
         dex_entry: 1 
       })
-      .skip(offset)
+      .skip(offset || 0)
       .limit(12)
       .toArray()
 

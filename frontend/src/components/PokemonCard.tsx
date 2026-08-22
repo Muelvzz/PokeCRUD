@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import pokeball from '../assets/icons/Pokeball.png'
 import bookmarkIcon from '../assets/icons/bookmark-icon.svg';
-// import bookmarkSolid from '../assets/icons/bookmark-solid.svg';
+import bookmarkSolid from '../assets/icons/bookmark-solid.svg';
 
 import TypeTag from './TypeTag';
 import { typeData, type ShowPokemonData } from '../types/pokemonType';
@@ -9,14 +9,27 @@ import { typeData, type ShowPokemonData } from '../types/pokemonType';
 interface PokemonCardProps {
     pokemon: ShowPokemonData;
     onClick: () => void;
+    setRefresh: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
+import { api } from '../service/api';
+
+function PokemonCard({ pokemon, onClick, setRefresh }: PokemonCardProps) {
     const typeInfo = typeData.find(
         (item) => item.type.toLowerCase() === pokemon.type[0]?.toLowerCase()
     );
 
     const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const handleClick = async (_id: string) => {
+        try {
+            let apiQuery = `/saved-pokemon?_id=${_id}`
+            await api.patch(apiQuery)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setRefresh(prev => !prev)
+        }
+    }
 
     return(
         <div onClick={onClick} className="h-fit p-2 sm:p-3 border-2 rounded-xl border-[#1F1F1F]/30 w-full">
@@ -54,8 +67,8 @@ function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
                             ))}
                         </div>
                     </div>
-                    <button onClick={(e) => e.stopPropagation()}>
-                        <img src={bookmarkIcon} alt="Bookmark" className="w-6"/>
+                    <button onClick={(e) => {handleClick(pokemon._id), e.stopPropagation()}}>
+                        <img src={pokemon.isFavorite ? bookmarkSolid : bookmarkIcon} alt="Bookmark" className="w-6"/>
                     </button>
                 </div>
             </div>

@@ -125,6 +125,7 @@ function Pokedex() {
                         <PokemonCard
                             pokemon={pokemon}
                             onClick={() => handleClick(pokemon)}
+                            setRefresh={setRefresh}
                         />
                     ))
                 ) : (

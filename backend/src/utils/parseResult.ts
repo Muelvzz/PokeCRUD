@@ -32,5 +32,6 @@ export function parseResult(result: WithId<Document>): SelectedPokemon {
     category: String(result.category ?? ""),
     baseStats: normalizeBaseStats(result.baseStats as Record<string, unknown> | undefined),
     abilities: Array.isArray(result.abilities) ? result.abilities.map(String) : [],
+    isFavorite: Boolean(result.isFavorite),
   }
 }
