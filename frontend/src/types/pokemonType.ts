@@ -108,6 +108,7 @@ export interface ShowPokemonData {
   name: string
   image: string
   type: string[]
+  isFavorite: boolean
 }
 
 export interface PokemonData extends ShowPokemonData {
@@ -119,5 +120,4 @@ export interface PokemonData extends ShowPokemonData {
   category: string
   baseStats: baseStats
   abilities: string[]
-  isFavorite: boolean
 }
