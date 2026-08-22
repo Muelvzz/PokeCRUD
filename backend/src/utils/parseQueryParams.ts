@@ -1,5 +1,5 @@
 import type { Request } from "express"
-import type { PokemonQueryParams } from "../types/pokemon.ts"
+import type { PokemonQueryParams } from "../types/parameters.ts"
 
 export function parseQueryParams(req: Request): PokemonQueryParams {
   const { offset, search, type } = req.query

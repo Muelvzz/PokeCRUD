@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb"
-import type { PokemonQueryComposition } from "../types/pokemon.ts"
+import type { PokemonQueryComposition } from "../types/parameters.ts"
 
 export function queryComp(query: PokemonQueryComposition) {
   const { search, type, _id, name, isFavorite } = query

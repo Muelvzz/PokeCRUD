@@ -1,4 +1,4 @@
-import type { PokemonData } from "../types/pokemon.ts"
+import type { PokemonPayload } from "../types/pokemon.ts"
 import type { WithId, Document } from "mongodb"
 
 function normalizeBaseStats(data: Record<string, unknown> | undefined) {
@@ -12,11 +12,11 @@ function normalizeBaseStats(data: Record<string, unknown> | undefined) {
   }
 }
 
-export function parseAllResults(results: WithId<Document>[]): PokemonData[] {
+export function parseAllResults(results: WithId<Document>[]): PokemonPayload[] {
   return results.map((result) => parseResult(result))
 }
 
-export function parseResult(result: WithId<Document>): PokemonData {
+export function parseResult(result: WithId<Document>): PokemonPayload {
   return {
     _id: String(result._id ?? ""),
     id: Number(result.id ?? 0),
@@ -24,13 +24,13 @@ export function parseResult(result: WithId<Document>): PokemonData {
     name: String(result.name ?? ""),
     image: String(result.image ?? ""),
     type: Array.isArray(result.type) ? result.type.map(String) : [],
-    height: Number(result.height ?? 0),
-    weight: Number(result.weight ?? 0),
-    baseExp: Number(result.baseExp ?? 0),
-    desc: String(result.desc ?? ""),
     gen: Number(result.gen ?? 0),
-    category: String(result.category ?? ""),
-    baseStats: normalizeBaseStats(result.baseStats as Record<string, unknown> | undefined),
-    abilities: Array.isArray(result.abilities) ? result.abilities.map(String) : [],
+    // height: Number(result.height ?? 0),
+    // weight: Number(result.weight ?? 0),
+    // baseExp: Number(result.baseExp ?? 0),
+    // desc: String(result.desc ?? ""),
+    // category: String(result.category ?? ""),
+    // baseStats: normalizeBaseStats(result.baseStats as Record<string, unknown> | undefined),
+    // abilities: Array.isArray(result.abilities) ? result.abilities.map(String) : [],
   }
 }

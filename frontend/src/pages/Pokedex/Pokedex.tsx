@@ -10,16 +10,36 @@ import PokemonModal from '../../components/CardModal';
 import { usePokemons } from '../../context/apiContext';
 import { useOutletContext } from 'react-router-dom';
 
-import { type PokemonData, type PokemonContextType, type PokemonContextSearch, type ContextRefresh, pokemonTypes } from '../../types/pokemonType';
+import { type PokemonContextType, type PokemonContextSearch, type ContextRefresh, pokemonTypes, type PokemonData } from '../../types/pokemonType';
+import type { PagesProps } from '../../types/paginationType';
+
+import PaginationButtons from '../../components/PaginationButtons';
+import { api } from '../../service/api';
 
 function Pokedex() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const filterRef = useRef<HTMLDivElement>(null);
 
     const pokemons = usePokemons() || []
-    const { pokemonType, setPokemonType } = useOutletContext<PokemonContextType>()
-    const { pokemonSearch, setPokemonSearch } = useOutletContext<PokemonContextSearch>()
-    const { setRefresh } = useOutletContext<ContextRefresh>()
+    const {
+    pokemonType,
+    setPokemonType,
+    pokemonSearch,
+    setPokemonSearch,
+    setRefresh,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    } = useOutletContext<
+    PokemonContextType &
+        PokemonContextSearch &
+        ContextRefresh &
+        PagesProps
+    >()
+
+    let pages = []
+
+    for (let i = 1; i < totalPages; i++) pages.push(i)
 
     useEffect(() => {
         function handleClickOutside(event: PointerEvent) {
@@ -35,10 +55,18 @@ function Pokedex() {
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState<PokemonData | null>(null);
 
-    const handleClick = (pokemon: PokemonData) => {
-        console.log("Clicked " + pokemon.name);
-
-        setModalData(pokemon);
+    const handleClick = async (pokemon: PokemonData) => {
+        try {
+            let apiQuery = `/${pokemon._id}`
+            const result = await api.get(apiQuery)
+            console.log(result.data.data)
+            setModalData(result.data.data)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setRefresh(prev => !prev)
+        }
+        console.log(pokemon)
         setModalOpen(true);
     };
 
@@ -77,6 +105,7 @@ function Pokedex() {
                                 setPokemonType(e.target.value);
                                 setIsFilterOpen(false);
                                 setRefresh(prev => !prev)
+                                setCurrentPage(0)
                             }}
                             className="border rounded-lg px-3 py-2 absolute right-0 top-12"
                         >
@@ -113,6 +142,12 @@ function Pokedex() {
                     onClose={() => setModalOpen(false)}
                 />
             )}
+
+            <PaginationButtons
+                totalPages={totalPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+            />
         </>
     )
 }

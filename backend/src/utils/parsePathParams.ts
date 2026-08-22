@@ -1,5 +1,5 @@
 import type { Request } from "express"
-import type { PokemonPathParams } from "../types/pokemon.ts"
+import type { PokemonPathParams } from "../types/parameters.ts"
 import { ObjectId } from "mongodb"
 
 export function parsePathParams(req: Request): PokemonPathParams {
