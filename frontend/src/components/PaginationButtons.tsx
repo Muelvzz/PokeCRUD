@@ -1,10 +1,12 @@
 import type { PagesProps } from "../types/paginationType"
 
+// seperate file
 type PaginationButtonsProps = Pick<
   PagesProps,
   "totalPages" | "currentPage" | "setCurrentPage"
 >
 
+// seperate file
 function getVisiblePages(
   activePage: number,
   totalPages: number
@@ -28,6 +30,7 @@ function getVisiblePages(
   return pages
 }
 
+// seperate file
 function PaginationButtons({
   totalPages,
   currentPage,

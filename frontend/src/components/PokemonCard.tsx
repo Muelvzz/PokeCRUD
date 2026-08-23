@@ -6,6 +6,7 @@ import bookmarkSolid from '../assets/icons/bookmark-solid.svg';
 import TypeTag from './TypeTag';
 import { typeData, type ShowPokemonData } from '../types/pokemonType';
 
+// seperate file
 interface PokemonCardProps {
     pokemon: ShowPokemonData;
     onClick: () => void;
@@ -19,6 +20,7 @@ function PokemonCard({ pokemon, onClick, setRefresh }: PokemonCardProps) {
         (item) => item.type.toLowerCase() === pokemon.type[0]?.toLowerCase()
     );
 
+    // seperate file
     const [isImageLoaded, setIsImageLoaded] = useState(false);
     const handleClick = async (_id: string) => {
         try {
