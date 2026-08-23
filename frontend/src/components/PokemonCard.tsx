@@ -4,33 +4,19 @@ import bookmarkIcon from '../assets/icons/bookmark-icon.svg';
 import bookmarkSolid from '../assets/icons/bookmark-solid.svg';
 
 import TypeTag from './TypeTag';
-import { typeData, type ShowPokemonData } from '../types/pokemonType';
+import { typeData } from '../types/pokemonType';
+import type { PokemonCardProps } from '../types/ComponentTypes';
 
-// seperate file
-interface PokemonCardProps {
-    pokemon: ShowPokemonData;
-    onClick: () => void;
-    setRefresh: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-import { api } from '../service/api';
+import { PatchPokemonFavorite } from '../service/ComponentService';
 
 function PokemonCard({ pokemon, onClick, setRefresh }: PokemonCardProps) {
     const typeInfo = typeData.find(
         (item) => item.type.toLowerCase() === pokemon.type[0]?.toLowerCase()
     );
 
-    // seperate file
     const [isImageLoaded, setIsImageLoaded] = useState(false);
     const handleClick = async (_id: string) => {
-        try {
-            let apiQuery = `/saved-pokemon?_id=${_id}`
-            await api.patch(apiQuery)
-        } catch (err) {
-            console.log(err)
-        } finally {
-            setRefresh(prev => !prev)
-        }
+        PatchPokemonFavorite({_id, setRefresh})
     }
 
     return(
