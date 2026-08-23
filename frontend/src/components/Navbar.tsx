@@ -29,8 +29,8 @@ function Navbar() {
                     Pokedex
                 </NavLink>
 
-                <NavLink to="/savedpokemon" onClick={closeMenu} className={({ isActive }) => `${isActive ? "text-[#1F1F1F] bg-white" : "text-white"} font-interRegular px-[20vw] sm:px-5 py-2 rounded-[30px]`}>
-                    Saved Pokémon
+                <NavLink to="/favorites" onClick={closeMenu} className={({ isActive }) => `${isActive ? "text-[#1F1F1F] bg-white" : "text-white"} font-interRegular px-[20vw] sm:px-5 py-2 rounded-[30px]`}>
+                    Favorites
                 </NavLink>
 
                 <NavLink to="/compare" onClick={closeMenu} className={({ isActive }) => `${isActive ? "text-[#1F1F1F] bg-white" : "text-white"} font-interRegular px-[20vw] sm:px-5 py-2 rounded-[30px]`}>

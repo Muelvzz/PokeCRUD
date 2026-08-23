@@ -1,18 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 
-import pokeballMissing from '../../assets/icons/Pokeball-missing.png'
+import pokeballMissing from "../../assets/icons/Pokeball-missing.png"
 import SearchBar from '../../components/SearchBar';
 import PokemonCard from '../../components/PokemonCard';
 import PokemonModal from '../../components/CardModal';
 
 import PaginationButtons from '../../components/PaginationButtons';
 import { type PokemonData } from '../../types/pokemonType';
-import { fetchPokemonPayload, fetchSelectedPokemon } from '../../service/PokedexService';
+import { fetchSelectedPokemon } from '../../service/PokedexService';
+import { fetchFavoritePokemonsPayload } from '../../service/FavoritesService';
 
 import { Header } from '../../components/Header';
 import FilterButton from '../../components/FilterButton';
 
-function Pokedex() {
+function Favorites() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const filterRef = useRef<HTMLDivElement>(null);
   const [pokemons, setPokemons] = useState<PokemonData[]>([])
@@ -25,7 +26,7 @@ function Pokedex() {
   const [modalData, setModalData] = useState<PokemonData | null>(null);
 
   useEffect(() => {
-    fetchPokemonPayload({pokemonType, pokemonSearch, currentPage, setPokemons, setTotalPages, setCurrentPage})
+    fetchFavoritePokemonsPayload({pokemonType, pokemonSearch, currentPage, setPokemons, setTotalPages, setCurrentPage})
   }, [pokemonType, pokemonSearch, currentPage, refresh])
 
     let pages = []
@@ -50,8 +51,8 @@ function Pokedex() {
     return(
         <>
             <Header 
-                headerTitle="Pokédex"
-                headerSubtitle="Explore, discover, and learn about Pokémon."
+                headerTitle="My Favorite Pokemons"
+                headerSubtitle="Explore your collections of favorite Pokemons."
             />
             <div className='flex justify-center items-center gap-1 mt-5 mx-8'>
                 <SearchBar 
@@ -106,4 +107,4 @@ function Pokedex() {
     )
 }
 
-export default Pokedex;
+export default Favorites;
