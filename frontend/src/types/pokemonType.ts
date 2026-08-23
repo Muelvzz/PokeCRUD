@@ -1,3 +1,5 @@
+// create two files for types and values
+
 import bug from '../assets/icons/type-icons/bug.svg';
 import dark from '../assets/icons/type-icons/dark.svg';
 import dragon from '../assets/icons/type-icons/dragon.svg';
@@ -120,4 +122,5 @@ export interface PokemonData extends ShowPokemonData {
   category: string
   baseStats: baseStats
   abilities: string[]
+  baseStatsTotal: number
 }

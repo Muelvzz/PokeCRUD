@@ -11,11 +11,6 @@ export interface PokemonFavoriteUpdate {
   isFavorite?: boolean
 }
 
-export interface SavedPokemonPayload extends PokemonPayload {
-  isFavorite?: boolean
-}
-
-
 export interface PokemonPayload {
   _id: string
   id: number

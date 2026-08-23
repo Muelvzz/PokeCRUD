@@ -15,15 +15,6 @@ function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-  // Calculate total stats
-  const totalStats =
-    (pokemon.baseStats.hp) +
-    (pokemon.baseStats.attack) +
-    (pokemon.baseStats.defense) +
-    (pokemon.baseStats.specialAttack) +
-    (pokemon.baseStats.specialDefense) +
-    (pokemon.baseStats.speed);
-
   const renderStatRow = (label: string, value: number) => {
     const percentage = Math.min(100, Math.max(0, (value / 255) * 100));
     return (
@@ -40,6 +31,10 @@ function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
     );
   };
 
+  // Create components for the following
+  // - left column
+  // - right column
+  // - buttons
   return (
     <div
       className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-0 md:p-4 overflow-y-auto"
@@ -140,7 +135,7 @@ function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
               {/* Total Row */}
               <div className="border-t border-black/80 mt-3 pt-2 flex items-center text-sm font-bold text-black">
                 <span className="w-20 text-right">Total</span>
-                <span className="w-8 text-right ml-2">{totalStats}</span>
+                <span className="w-8 text-right ml-2">{pokemon.baseStatsTotal}</span>
               </div>
             </div>
 
