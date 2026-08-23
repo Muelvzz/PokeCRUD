@@ -10,12 +10,13 @@ export const getAllSavedPokemon = async (req: Request, res: Response, next: Next
 
   const { offset, search, type } = parseQueryParams(req)
   let query = queryComp({ search, type })
+  query.isFavorite = true
 
   try {
 
     const db = getDb()
     const collection = (await db).collection("pokemon")
-    let results = await collection.find(query).skip(offset).limit(10).toArray()
+    let results = await collection.find(query).skip(offset || 0).limit(12).toArray()
     
     if (results.length === 0) { return handleError(next, { status: 404, message: "Pokemon Not Found." }) }
 

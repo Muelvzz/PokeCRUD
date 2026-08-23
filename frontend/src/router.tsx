@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 
 import Pokedex from "./pages/Pokedex/Pokedex";
-import SavedPokemon from "./pages/SavedPokemon/SavedPokemon";
+import FavoritesPage from "./pages/Favorites/FavoritesPage";
 import Compare from "./pages/Compare/Compare";
 import Statistics from "./pages/Statistics/Statistics";
 import NotFound from "./pages/NotFound";
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         element: <App />,
         children: [
             { index: true, element: <Pokedex /> },
-            { path: "savedpokemon", element: <SavedPokemon /> },
+            { path: "favorites", element: <FavoritesPage /> },
             { path: "compare", element: <Compare /> },
             { path: "statistics", element: <Statistics /> },
             { path: "*", element: <NotFound /> },
